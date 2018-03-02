@@ -7,6 +7,7 @@ import com.jay.wms.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -49,5 +50,10 @@ public class UserController {
         map.put("user",user);
         map.put("token",uuid);
         return map;
+    }
+
+    @RequestMapping("/queryByDeptId")
+    public List<User> queryByDeptId(@RequestParam( name = "deptId") String deptId){
+        return userSerivce.queryByDeptId(deptId);
     }
 }

@@ -8,4 +8,6 @@ public interface DepartmentService {
     void add(Department department);
 
     List<Department> query(Department department);
+
+    Department queryByUserId(String id);
 }

@@ -10,4 +10,6 @@ public interface UserDao {
 
     List<User> query(User user);
 
+    List<User> queryByDeptId(String id);
+
 }

@@ -8,6 +8,7 @@
         <result column="code" property="code"/>
         <result column="name" property="name"/>
         <result column="create_by" property="createBy"/>
+        <result column="is_admin" property="isAdmin"/>
     </resultMap>
     <sql id="columnList">
         id,
@@ -64,5 +65,16 @@
             </if>
         </trim>
     </insert>
+    <select id="queryByUserId" parameterType="String" parameterMap="com.jay.wms.entity.Department">
+        SELECCT D.*,U.IS_ADMIN FROM BASE_USER_DEPT_REL U
+        WHERE U.USER_ID = #{String}
+        LEFT JOIN BASE_DEPARTMENT D on D.id = U.DEPT_ID
+    </select>
 
+    <insert id="addUserRel" parameterType="java.util.Map">
+        INSERT INTO BASE_USER_DEPT_REL
+        (DEPT_ID,USER_ID,IS_ADMIN)
+        VALUES
+        (#{id},#{userId},#{isAdmin})
+    </insert>
 </mapper>

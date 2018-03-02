@@ -5,6 +5,7 @@ import com.jay.wms.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,4 +28,11 @@ public class DepartmentController {
         List<Department> list = departmentService.query(department);
         return list;
     }
+
+    @RequestMapping("/queryByUserId")
+    public Department queryByUserId(@RequestParam( name = "userId") String userId){
+        return departmentService.queryByUserId(userId);
+    }
+
+
 }

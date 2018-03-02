@@ -12,4 +12,5 @@ public class Department {
     private Integer code;
     private String name;
     private String createBy;
+    private String isAdmin;
 }

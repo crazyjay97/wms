@@ -76,4 +76,11 @@
         BASE_USER
         <include refid="condition"/>
     </select>
+    <select id="queryByDeptId" parameterType="String" resultMap="com.jay.wms.entity.User">
+        SELECT
+        <include refid="columnList"/>
+        FROM BASE_USER U
+        RIGHT JOIN BASE_USER_DEPT_REL R
+        WHERE R.DEPT_ID = #{String}
+    </select>
 </mapper>

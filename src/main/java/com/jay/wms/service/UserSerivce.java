@@ -10,4 +10,5 @@ public interface UserSerivce {
 
     List<User> query(User user);
 
+    List<User> queryByDeptId(String deptId);
 }

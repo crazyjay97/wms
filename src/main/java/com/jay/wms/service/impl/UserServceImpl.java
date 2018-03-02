@@ -24,4 +24,9 @@ public class UserServceImpl implements UserSerivce {
     public List<User> query(User user) {
         return userDao.query(user);
     }
+
+    @Override
+    public List<User> queryByDeptId(String deptId) {
+        return userDao.queryByDeptId(deptId);
+    }
 }

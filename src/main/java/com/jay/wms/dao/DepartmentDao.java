@@ -3,6 +3,7 @@ package com.jay.wms.dao;
 import com.jay.wms.entity.Department;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DepartmentDao {
 
@@ -11,4 +12,8 @@ public interface DepartmentDao {
     void update(Department department);
 
     List<Department> query(Department department);
+
+    Department queryByUserId(String id);
+
+    void addUserRel(Map map);
 }
