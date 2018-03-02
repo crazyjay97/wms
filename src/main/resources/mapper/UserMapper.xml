@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jay.wms.dao.UserDao">
+    <resultMap id="userMap" type="com.jay.wms.entity.User">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <sql id="columnList">
+        id,
+        name,
+        account,
+        password,
+        create_time
+    </sql>
+    <sql id="condition">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name!=''">
+                and name like '%'||#{name}||'%'
+            </if>
+            <if test="account != null and account !=''">
+                and account = #{account}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </trim>
+    </sql>
+    <insert id="add" parameterType="Object">
+        INSERT INTO BASE_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null ">
+                name,
+            </if>
+            <if test="account != null ">
+                account,
+            </if>
+            <if test="password != null ">
+                password
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="account != null ">
+                #{account},
+            </if>
+            <if test="password != null ">
+                #{password}
+            </if>
+        </trim>
+    </insert>
+    <select id="query" parameterType="com.jay.wms.entity.User" resultMap="userMap">
+        SELECT
+        <include refid="columnList"/>
+        FROM
+        BASE_USER
+        <include refid="condition"/>
+    </select>
+</mapper>
