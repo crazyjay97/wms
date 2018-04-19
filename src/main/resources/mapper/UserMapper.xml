@@ -76,7 +76,7 @@
         BASE_USER
         <include refid="condition"/>
     </select>
-    <select id="queryByDeptId" parameterType="String" resultMap="com.jay.wms.entity.User">
+    <select id="queryByDeptId" parameterType="String" resultMap="userMap">
         SELECT
         <include refid="columnList"/>
         FROM BASE_USER U

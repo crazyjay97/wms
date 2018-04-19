@@ -19,9 +19,9 @@ public class DepartmentSerivceImpl implements DepartmentService {
     public void add(Department department) {
         departmentDao.add(department);
         Map map = new HashMap();
-        map.put("id",department.getId());
-        map.put("userId",department.getCreateBy());
-        map.put("isAdmin",1);
+        map.put("id", department.getId());
+        map.put("userId", department.getCreateBy());
+        map.put("isAdmin", 1);
         departmentDao.addUserRel(map);
     }
 

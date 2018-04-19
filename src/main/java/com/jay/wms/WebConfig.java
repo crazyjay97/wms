@@ -34,10 +34,10 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
         super.addInterceptors(registry);
     }
 
-    @Override
+/*    @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/");
         super.addResourceHandlers(registry);
-    }
+    }*/
 
 }

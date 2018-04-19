@@ -33,7 +33,7 @@
             </if>
         </trim>
     </sql>
-    <select id="query" parameterType="com.jay.wms.entity.Department" resultMap="departmentMap">
+    <select id="query" parameterType="com.jay.wms.entity.Department" resultMap="departmentMap   ">
         SELECT
         <include refid="columnList"/>
         FROM BASE_DEPARTMENT
@@ -65,10 +65,10 @@
             </if>
         </trim>
     </insert>
-    <select id="queryByUserId" parameterType="String" parameterMap="com.jay.wms.entity.Department">
-        SELECCT D.*,U.IS_ADMIN FROM BASE_USER_DEPT_REL U
-        WHERE U.USER_ID = #{String}
+    <select id="queryByUserId" parameterType="String" resultMap="departmentMap">
+        SELECT D.*,U.IS_ADMIN FROM BASE_USER_DEPT_REL U
         LEFT JOIN BASE_DEPARTMENT D on D.id = U.DEPT_ID
+        WHERE U.USER_ID = #{0}
     </select>
 
     <insert id="addUserRel" parameterType="java.util.Map">

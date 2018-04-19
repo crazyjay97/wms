@@ -34,6 +34,8 @@ public class TokenInterceptor implements HandlerInterceptor {
             if(token.equals(json.getString("token"))){
                 return true;
             }
+        }else {
+            return true;
         }
         return false;
     }

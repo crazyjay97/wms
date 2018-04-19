@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jay.wms.dao.WareHouseDao">
+    <resultMap id="wareHouseMap" type="com.jay.wms.entity.WareHouse">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="address" property="address"/>
+    </resultMap>
+    <select id="queryByDeptId" parameterType="String" resultMap="wareHouseMap">
+        SELECT * FROM BASE_WAREHOUSE
+        WHERE DEPT_ID = #{0}
+    </select>
+    <insert id="add" parameterType="com.jay.wms.entity.WareHouse" keyColumn="id" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO BASE_WAREHOUSE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null ">
+                name,
+            </if>
+            <if test="deptId != null ">
+                dept_id,
+            </if>
+            <if test="address != null ">
+                address
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null ">
+                #{name},
+            </if>
+            <if test="deptId != null">
+                #{deptId},
+            </if>
+            <if test="address != null ">
+                #{address}
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.jay.wms.entity.WareHouse">
+        UPDATE BASE_WAREHOUSE
+        SET
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null ">
+                name = #{name},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="address != null ">
+                address = #{address}
+            </if>
+        </trim>
+        WHERE id = #{id}
+    </update>
+    <delete id="del" parameterType="java.lang.Integer[]">
+        DELETE FROM BASE_WAREHOUSE WHERE ID IN
+        <foreach collection="array" item="id" open="in (" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

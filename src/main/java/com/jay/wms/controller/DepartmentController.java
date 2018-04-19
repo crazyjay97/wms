@@ -1,13 +1,12 @@
 package com.jay.wms.controller;
 
 import com.jay.wms.entity.Department;
+import com.jay.wms.entity.User;
 import com.jay.wms.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -30,8 +29,9 @@ public class DepartmentController {
     }
 
     @RequestMapping("/queryByUserId")
-    public Department queryByUserId(@RequestParam( name = "userId") String userId){
-        return departmentService.queryByUserId(userId);
+    public Department queryByUserId(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        return departmentService.queryByUserId(id);
     }
 
 

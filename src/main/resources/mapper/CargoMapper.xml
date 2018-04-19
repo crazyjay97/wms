@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jay.wms.dao.CargoDao">
+    <resultMap id="cargoMap" type="com.jay.wms.entity.Cargo">
+        <result property="id" column="id"/>
+        <result property="img" column="img"/>
+        <result property="name" column="name"/>
+        <result property="count" column="count"/>
+        <result property="createBy" column="create_by"/>
+        <result property="deptId" column="dept_id"></result>
+    </resultMap>
+    <sql id="columnList">
+        id,
+        img,
+        name,
+        count,
+        dept_id,
+        create_by
+    </sql>
+    <select id="queryByDeptId" resultType="cargoMap" parameterType="int">
+        SELECT * FROM BASE_CARGO
+        WHERE DEPT_ID = #{0}
+    </select>
+    <insert id="add" parameterType="com.jay.wms.entity.Cargo" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO BASE_CARGO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="img != null ">
+                img,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="createBy != null ">
+                create_by
+            </if>
+            <if test="deptId != null ">
+                dept_id
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="img != null ">
+                #{img},
+            </if>
+            <if test="name != null">
+                #{name}
+            </if>
+            <if test="count != null">
+                #{count}
+            </if>
+            <if test="createBy != null ">
+                #{create_by}
+            </if>
+            <if test="deptId != null ">
+                #{deptId}
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.jay.wms.entity.Cargo">
+        UPDATE BASE_CARGO SET
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="img != null ">
+                img = #{img},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="count != null">
+                count = #{count},
+            </if>
+            <if test="createBy != null ">
+                create_by = #{createBy}
+            </if>
+            <if test="deptId != null ">
+                dept_id = #{deptId}
+            </if>
+        </trim>
+        WHERE ID = #{id}
+    </update>
+</mapper>
