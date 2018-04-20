@@ -10,6 +10,7 @@
         <result column="password" property="password"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
+
     <sql id="columnList">
         id,
         name,
@@ -83,4 +84,5 @@
         RIGHT JOIN BASE_USER_DEPT_REL R
         WHERE R.DEPT_ID = #{String}
     </select>
+
 </mapper>

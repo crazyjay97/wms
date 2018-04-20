@@ -56,10 +56,7 @@
         </trim>
         WHERE id = #{id}
     </update>
-    <delete id="del" parameterType="java.lang.Integer[]">
-        DELETE FROM BASE_WAREHOUSE WHERE ID IN
-        <foreach collection="array" item="id" open="in (" close=")" separator=",">
-            #{id}
-        </foreach>
+    <delete id="del" parameterType="String">
+        DELETE FROM BASE_WAREHOUSE WHERE ID = #{0}
     </delete>
 </mapper>

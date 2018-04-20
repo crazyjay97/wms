@@ -11,6 +11,12 @@
         <result property="createBy" column="create_by"/>
         <result property="deptId" column="dept_id"></result>
     </resultMap>
+    <resultMap id="cargoWhRelMap" type="com.jay.wms.entity.CargoWhRel">
+        <result column="id" property="id"/>
+        <result column="wd_id" property="wdId"/>
+        <result column="cargo_id" property="cargoId"/>
+        <result column="num" property="num"/>
+    </resultMap>
     <sql id="columnList">
         id,
         img,
@@ -19,7 +25,7 @@
         dept_id,
         create_by
     </sql>
-    <select id="queryByDeptId" resultType="cargoMap" parameterType="int">
+    <select id="queryByDeptId" resultMap="cargoMap" parameterType="String">
         SELECT * FROM BASE_CARGO
         WHERE DEPT_ID = #{0}
     </select>
@@ -36,7 +42,7 @@
                 count,
             </if>
             <if test="createBy != null ">
-                create_by
+                create_by,
             </if>
             <if test="deptId != null ">
                 dept_id
@@ -48,13 +54,13 @@
                 #{img},
             </if>
             <if test="name != null">
-                #{name}
+                #{name},
             </if>
             <if test="count != null">
-                #{count}
+                #{count},
             </if>
             <if test="createBy != null ">
-                #{create_by}
+                #{create_by},
             </if>
             <if test="deptId != null ">
                 #{deptId}
@@ -74,7 +80,7 @@
                 count = #{count},
             </if>
             <if test="createBy != null ">
-                create_by = #{createBy}
+                create_by = #{createBy},
             </if>
             <if test="deptId != null ">
                 dept_id = #{deptId}
@@ -82,4 +88,62 @@
         </trim>
         WHERE ID = #{id}
     </update>
+    <delete id="del" parameterType="String">
+        DELETE FROM BASE_CARGO WHERE ID = #{0}
+    </delete>
+    <select id="queryCargoNumById" parameterType="String" resultType="com.jay.wms.entity.CargoWhRel">
+        SELECT * FROM cargo_wh_rel WHERE cargo_id = #{0}
+    </select>
+    <delete id="delCargoByWhId" parameterType="String">
+        DELETE FROM CARGO_WH_REL WHERE WD_ID = #{0}
+    </delete>
+    <insert id="joinToWh" parameterType="com.jay.wms.entity.CargoWhRel" keyColumn="id" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO CARGO_WH_REL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wdId != null">
+                wd_id,
+            </if>
+            <if test="cargoId != null">
+                cargo_id,
+            </if>
+            <if test="num != null ">
+                num
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wdId != null">
+                #{wdId},
+            </if>
+            <if test="cargoId != null">
+                #{cargoId},
+            </if>
+            <if test="num != null ">
+                #{num}
+            </if>
+        </trim>
+    </insert>
+    <select id="queryByWhId" parameterType="String" resultMap="cargoWhRelMap">
+        SELECT R.*,C.NAME FROM CARGO_WH_REL R
+        LEFT JOIN  BASE_CARGO C ON R.CARGO_ID = C.ID
+        WHERE R.WD_ID = #{0}
+    </select>
+
+    <update id="updateRel" parameterType="com.jay.wms.entity.CargoWhRel">
+        UPDATE CARGO_WH_REL SET
+        <if test="wdId != null">
+            wd_id = #{wdId},
+        </if>
+        <if test="cargoId != null">
+            cargo_id = #{cargoId},
+        </if>
+        <if test="num != null ">
+            num = #{num}
+        </if>
+        WHERE ID = #{id}
+    </update>
+    <delete id="delRel" parameterType="String">
+        DELETE FROM CARGO_WH_REL WHERE ID = #{0}
+    </delete>
 </mapper>

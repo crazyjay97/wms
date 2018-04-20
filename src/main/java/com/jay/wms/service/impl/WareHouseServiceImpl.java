@@ -1,5 +1,6 @@
 package com.jay.wms.service.impl;
 
+import com.jay.wms.dao.CargoDao;
 import com.jay.wms.dao.WareHouseDao;
 import com.jay.wms.entity.WareHouse;
 import com.jay.wms.service.WareHouseService;
@@ -12,6 +13,8 @@ import java.util.List;
 public class WareHouseServiceImpl implements WareHouseService {
     @Autowired
     private WareHouseDao dao;
+    @Autowired
+    private CargoDao cargoDao;
 
     @Override
     public List<WareHouse> queryByDeptId(String id) {
@@ -29,7 +32,8 @@ public class WareHouseServiceImpl implements WareHouseService {
     }
 
     @Override
-    public void del(Integer[] id) {
+    public void del(String id) {
         dao.del(id);
+        cargoDao.delCargoByWhId(id);
     }
 }

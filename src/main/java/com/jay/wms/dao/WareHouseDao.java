@@ -11,5 +11,5 @@ public interface WareHouseDao {
 
     void update(WareHouse wareHouse);
 
-    void del(Integer id[]);
+    void del(String id);
 }
