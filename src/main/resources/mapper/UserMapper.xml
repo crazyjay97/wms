@@ -9,6 +9,7 @@
         <result column="account" property="account"/>
         <result column="password" property="password"/>
         <result column="create_time" property="createTime"/>
+        <result column="rel_id" property="relId"></result>
     </resultMap>
 
     <sql id="columnList">
@@ -79,10 +80,28 @@
     </select>
     <select id="queryByDeptId" parameterType="String" resultMap="userMap">
         SELECT
-        <include refid="columnList"/>
+        U.*,
+        R.id rel_id
         FROM BASE_USER U
         RIGHT JOIN BASE_USER_DEPT_REL R
+        ON U.ID = R.USER_ID
         WHERE R.DEPT_ID = #{String}
     </select>
-
+    <delete id="delUserFromDept" parameterType="String">
+        DELETE FROM BASE_USER_DEPT_REL WHERE ID = #{0}
+    </delete>
+    <select id="findUserByAccount" parameterType="String" resultMap="userMap">
+        SELECT * FROM BASE_USER WHERE ACCOUNT = #{0}
+    </select>
+    <insert id="addToDept" parameterType="java.util.Map">
+        INSERT INTO BASE_USER_DEPT_REL
+        (USER_ID,DEPT_ID,IS_ADMIN)
+        VALUES
+        (#{userId},#{deptId},#{isAdmin})
+    </insert>
+    <select id="findUserInDept" parameterType="java.util.Map" resultMap="userMap">
+        SELECT U.* FROM BASE_USER U
+        RIGHT JOIN BASE_USER_DEPT_REL R ON U.ID = R.USER_ID
+        WHERE U.ACCOUNT = #{account}
+    </select>
 </mapper>

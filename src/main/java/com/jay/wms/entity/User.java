@@ -1,5 +1,8 @@
 package com.jay.wms.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 public class User {
@@ -8,6 +11,9 @@ public class User {
     private String account;
     private String password;
     private Date createTime;
+    @Getter
+    @Setter
+    private Integer relId;
 
     public String getId() {
         return id;

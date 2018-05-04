@@ -4,7 +4,7 @@ server:
 
 spring:
   datasource:
-    url : jdbc:mysql://127.0.0.1:3306/WMS
+    url : jdbc:mysql://122.152.202.172:3306/wms?characterEncoding=UTF-8
     username : root
     password : 123456
     driverClassName : com.mysql.jdbc.Driver

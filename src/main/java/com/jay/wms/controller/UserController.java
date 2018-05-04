@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class UserController {
         return user;
     }
 
-    @Auth( check = false)
+    @Auth(check = false)
     @RequestMapping("/login")
     public Map login(@RequestBody User user) throws Exception {
         if (user.getAccount() == null ||
@@ -47,13 +48,32 @@ public class UserController {
         String uuid = UUID.randomUUID().toString();
         redisUtil.set(user.getId(), uuid, 60 * 30);
         Map map = new HashMap();
-        map.put("user",user);
-        map.put("token",uuid);
+        map.put("user", user);
+        map.put("token", uuid);
         return map;
     }
 
     @RequestMapping("/queryByDeptId")
-    public List<User> queryByDeptId(@RequestParam( name = "deptId") String deptId){
-        return userSerivce.queryByDeptId(deptId);
+    public List<User> queryByDeptId(HttpServletRequest request) {
+        return userSerivce.queryByDeptId(request.getParameter("deptId"));
     }
+
+    @RequestMapping("delUserFromDept")
+    public void delUserFromDept(HttpServletRequest request) {
+        userSerivce.delUserFromDept(request.getParameter("id"));
+    }
+
+    @RequestMapping("joinToDept")
+    public void joinToDept(HttpServletRequest request) {
+        Map c = new HashMap();
+        c.put("account", request.getParameter("account"));
+        c.put("deptId", request.getParameter("deptId"));
+        c.put("isAdmin", "0");
+        try {
+            userSerivce.joinToDept(c);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
